@@ -12,7 +12,7 @@ import 'components/spinner.dart';
 class GyroStuff extends StatefulWidget {
   // Constant Values
   final int GYRO_SENSITIVITY = 3;
-  final double SYSTEM_SLEEP = 2.6;
+  final double SYSTEM_SLEEP = 2.2;
   final String DEVICE_ADDRESS = '98:DA:40:00:F7:5D';
 
   const GyroStuff({Key? key}) : super(key: key);
@@ -28,9 +28,7 @@ class _GyroStuffState extends State<GyroStuff> {
 
   @override
   void initState() {
-    gyroscopeEvents.listen((GyroscopeEvent event) =>
-      _gyroHandler(event)
-    );
+    gyroscopeEvents.listen((GyroscopeEvent event) => _gyroHandler(event));
     super.initState();
   }
 
@@ -47,16 +45,18 @@ class _GyroStuffState extends State<GyroStuff> {
           backgroundColor: Colors.redAccent,
         ),
         body: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Container(
-            //     alignment: Alignment.center,
-            //     padding: EdgeInsets.all(30),
-            //     child: Column(children: [
-            //       Text(
-            //         direction,
-            //         style: TextStyle(fontSize: 30),
-            //       )
-            //     ])),
+            Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(30),
+                child: Column(children: [
+                  Text(
+                    direction,
+                    style: TextStyle(fontSize: 30),
+                  )
+                ])),
             if (!connected)
               MaterialButton(
                 onPressed: () => _testConnection(),
@@ -66,14 +66,13 @@ class _GyroStuffState extends State<GyroStuff> {
               ),
             MaterialButton(
               onPressed: () => Fluttertoast.showToast(
-                msg: "This opens the unity apk :D",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-                fontSize: 16.0
-              ),
+                  msg: "This opens the unity apk :D",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  fontSize: 16.0),
               child: const Text('Launch App'),
               color: Colors.grey,
               textColor: Colors.white,
@@ -119,20 +118,21 @@ class _GyroStuffState extends State<GyroStuff> {
     y = event.y;
 
     if (x > 1) {
-      direction += "up"; //Up
+      direction += 'u'; //Up
     } else if (x < -1) {
-      direction += "do"; //Down
+      direction += 'd'; //Down
     }
 
     if (y > 1) {
-      direction += "ri"; //Right
+      direction += 'r'; //Right
     } else if (y < -1) {
-      direction += "le"; //Left
+      direction += 'l'; //Left
     }
 
     waitingBT = true;
 
-    if (direction.length > 1) {
+    if (direction.isNotEmpty) {
+      debugPrint('Sending BT event...');
       await _sendData(_toUint8List(direction))
           .then((ok) => _handleBtResponse(ok));
     }
@@ -171,8 +171,7 @@ class _GyroStuffState extends State<GyroStuff> {
     if (ok) {
       debugPrint('BT event consumed');
       connected = true;
-    }
-    else {
+    } else {
       debugPrint('No BT Response');
       connected = false;
     }
