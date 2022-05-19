@@ -1,0 +1,9 @@
+Flutter App:
+    ☐ Add menus
+    ☐ Add firebase login
+    ☐ Handle ez user info
+    ☐ Tune gyro sensitivity
+
+Arduino:
+    ☐ Move servo
+    ☐ Move servo on BT signal
