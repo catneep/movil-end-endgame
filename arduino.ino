@@ -31,11 +31,13 @@ void loop(){
     switch(receivedValue){
       case 100: // d
         move_servo(x_axis_servo, -DEGREES);
+        break;
       case 117: // u
         move_servo(x_axis_servo, DEGREES);
         break;
       case 108: // l
         move_servo(y_axis_servo, -DEGREES);
+        break;
       case 114: // r
         move_servo(y_axis_servo, DEGREES);
         break;
