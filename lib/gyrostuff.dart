@@ -10,9 +10,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'components/spinner.dart';
 
 class GyroStuff extends StatefulWidget {
-  // Constant Values
+  // CONSTANTES
+
+  // Mínima fuerza detectada en giroscopio para enviar comando BT
   final int GYRO_SENSITIVITY = 3;
+  // Delay entre señales enviadas
   final double SYSTEM_SLEEP = 2.2;
+  // Dirección MAC del módulo BT
   final String DEVICE_ADDRESS = '98:DA:40:00:F7:5D';
 
   const GyroStuff({Key? key}) : super(key: key);
@@ -50,11 +54,11 @@ class _GyroStuffState extends State<GyroStuff> {
           children: [
             Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(30),
+                padding: const EdgeInsets.all(30),
                 child: Column(children: [
                   Text(
                     direction,
-                    style: TextStyle(fontSize: 30),
+                    style: const TextStyle(fontSize: 30),
                   )
                 ])),
             if (!connected)
@@ -65,14 +69,7 @@ class _GyroStuffState extends State<GyroStuff> {
                 textColor: Colors.white,
               ),
             MaterialButton(
-              onPressed: () => Fluttertoast.showToast(
-                  msg: "This opens the unity apk :D",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
-                  fontSize: 16.0),
+              onPressed: () => elHackDeUnity(),
               child: const Text('Launch App'),
               color: Colors.grey,
               textColor: Colors.white,
@@ -185,4 +182,16 @@ class _GyroStuffState extends State<GyroStuff> {
 
     return unit8List;
   }
+}
+
+void elHackDeUnity() {
+  Fluttertoast.showToast(
+      msg: "This opens the unity apk :D",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.white,
+      textColor: Colors.black,
+      fontSize: 16.0
+    );
 }
